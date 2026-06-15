@@ -1,0 +1,244 @@
+:root {
+  --bs-primary: #0d6efd;
+
+  --hispantic-dark: #111827;
+  --hispantic-gray: #6b7280;
+  --hispantic-light: #f8f9fa;
+
+  --header-height: 100px;
+  --header-height-scrolled: 60px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  padding-top: 0;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    sans-serif;
+
+  color: var(--hispantic-dark);
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* HEADER */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 100px;
+     background-color: rgba(248, 250, 252, 0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    transition: all 0.3s ease;
+}
+
+/* LOGO */
+.site-header .logo {
+    height: 48px;
+    transition: all 0.3s ease;
+}
+
+/* LINKS */
+.site-header .nav-link {
+    font-weight: 500;
+    color: #111827;
+}
+
+.site-header .nav-link:hover {
+    opacity: 0.6;
+}
+
+:root {
+    --hispantic-blue: #214478;
+}
+
+/* LINKS BASE */
+.site-header .nav-link {
+    position: relative;
+    font-weight: 500;
+    color: #111827;
+    padding: 6px 2px;
+    transition: color 0.2s ease;
+}
+
+/* HOVER + ACTIVE COLOR */
+.site-header .nav-link:hover,
+.site-header .nav-link.active {
+    color: var(--hispantic-blue);
+}
+
+/* BARRA INFERIOR (ANIMADA) */
+.site-header .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+
+    width: 0%;
+    height: 2px;
+
+    background-color: var(--hispantic-blue);
+
+    transition: width 0.25s ease;
+}
+
+/* HOVER */
+.site-header .nav-link:hover::after {
+    width: 100%;
+}
+
+/* ACTIVE */
+.site-header .nav-link.active::after {
+    width: 100%;
+}
+
+/* IDIOMAS SEPARADOR */
+.lang-separator {
+    color: var(--hispantic-blue);
+    opacity: 0.6;
+    margin: 0 2px;
+    user-select: none;
+}
+
+/* SCROLL STATE */
+.site-header.scrolled {
+    height: 60px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+}
+
+.site-header.scrolled .logo {
+    height: 34px;
+}
+
+/* 🔥 ALTURA FIJA REAL */
+.cases-carousel {
+  position: relative;
+  padding: 0 110px;
+}
+
+.cases-inner {
+  height: 520px;
+}
+
+.carousel-item {
+  height: 520px;
+}
+
+/* FLEX REAL PARA CENTRAR */
+.cases-slide {
+  height: 520px;
+  display: flex;
+  align-items: center;
+}
+
+/* 🔥 BOTONES (FORZADOS, SIN BOOTSTRAP ICONS) */
+.cases-btn {
+  width: 60px;
+  height: 60px;
+  opacity: 1 !important;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ocultamos icono bootstrap */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: none !important;
+}
+
+.carousel-control-prev.cases-btn {
+    left: 30px;
+}
+
+.carousel-control-next.cases-btn {
+    right: 30px;
+}
+
+/* flecha visible SI O SI */
+.cases-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  background: #000;
+  color: #fff;
+
+  border-radius: 50%;
+
+  font-size: 22px;
+  line-height: 1;
+
+  user-select: none;
+}
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-image: url('/images/hero_imagen.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+background-attachment: fixed;
+    color: white;
+}
+
+/* 🔥 OVERLAY OSCURO */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: rgba(10, 15, 25, 0.65);
+}
+
+/* asegura que el contenido esté encima */
+.hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+#proof-bar i {
+    opacity: 0.9;
+}
+
+#proof-bar .fw-bold {
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+}
+
+#proof-bar small {
+    font-size: 0.75rem;
+}
+
+.case-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    color: #111827;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.case-link:hover {
+    border-bottom: 2px solid #214478;
+    color: #214478;
+    transform: translateX(2px);
+}

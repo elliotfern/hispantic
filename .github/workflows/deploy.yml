@@ -1,0 +1,73 @@
+name: Deploy Memoria Historica (full sync + build + composer)
+
+on:
+  push:
+    branches: [main]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies (npm)
+        run: npm ci
+
+      - name: Build (npm)
+        run: npm run build
+
+      - name: Start SSH agent
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 87.98.230.129 >> ~/.ssh/known_hosts
+
+      - name: Sync project to shared hosting (rsync)
+        run: |
+          set -euo pipefail
+
+          REMOTE="epgylzqu@87.98.230.129"
+          REMOTE_DIR="/home/epgylzqu/memoriaterrassa.cat/"
+
+          rsync -az --delete \
+            --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r \
+            --exclude ".git/" \
+            --exclude ".github/" \
+            --exclude "node_modules/" \
+            --exclude ".env" \
+            --exclude ".env.*" \
+            --exclude "var/" \
+            --exclude "*.log" \
+            -e "ssh" \
+            ./ "$REMOTE:$REMOTE_DIR"
+
+      - name: Composer install on server
+        run: |
+          set -euo pipefail
+
+          ssh epgylzqu@87.98.230.129 "bash -lc '
+            set -euo pipefail
+            cd /home/epgylzqu/memoriaterrassa.cat
+
+            if [ -f composer.json ]; then
+              command -v composer >/dev/null 2>&1 || { echo \"ERROR: composer no está instalado\"; exit 3; }
+              composer install --no-dev --prefer-dist --optimize-autoloader
+            else
+              echo \"No composer.json: salto composer\"
+            fi
+          '"
