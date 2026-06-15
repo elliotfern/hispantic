@@ -1,4 +1,4 @@
-name: Deploy Memoria Historica (full sync + build + composer)
+name: Deploy Hispantic (full sync + build + composer)
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies (npm)
@@ -42,7 +42,7 @@ jobs:
           set -euo pipefail
 
           REMOTE="epgylzqu@87.98.230.129"
-          REMOTE_DIR="/home/epgylzqu/memoriaterrassa.cat/"
+          REMOTE_DIR="/home/epgylzqu/public_html/"
 
           rsync -az --delete \
             --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r \
@@ -62,7 +62,7 @@ jobs:
 
           ssh epgylzqu@87.98.230.129 "bash -lc '
             set -euo pipefail
-            cd /home/epgylzqu/memoriaterrassa.cat
+            cd /home/epgylzqu/public_html
 
             if [ -f composer.json ]; then
               command -v composer >/dev/null 2>&1 || { echo \"ERROR: composer no está instalado\"; exit 3; }
